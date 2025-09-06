@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Premiação</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .container {
+            max-width: 900px;
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 8px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #3b82f6;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <div class="container bg-white shadow-xl rounded-2xl p-6 md:p-10 w-full">
+        <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">Calculadora de Premiação</h1>
+        <p class="text-center text-gray-500 mb-8">
+            Calcule sua premiação total na Liga Virtual com base nos seus resultados.
+        </p>
+
+        <!-- Seção de Entrada de Dados -->
+        <div class="mb-8 p-6 bg-blue-50 rounded-lg">
+            <h2 class="text-xl font-semibold mb-4 section-title text-gray-700">Dados da Equipe</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="caixa" class="block text-sm font-medium text-gray-600 mb-1">Valor em Caixa (R$)</label>
+                    <input type="text" id="caixa" placeholder="Ex: 57.893,57"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                </div>
+                <div>
+                    <label for="salarioTotal" class="block text-sm font-medium text-gray-600 mb-1">Salário a Pagar (R$)</label>
+                    <input type="text" id="salarioTotal" placeholder="Ex: 88.860,00"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                </div>
+            </div>
+        </div>
+
+        <!-- Seleção de Competições -->
+        <div class="mb-8 p-6 bg-green-50 rounded-lg">
+            <h2 class="text-xl font-semibold mb-4 section-title text-gray-700">Premiações de Competições</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Série -->
+                <div>
+                    <label for="liga" class="block text-sm font-medium text-gray-600 mb-1">Série</label>
+                    <select id="liga" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                        <option value="A">Série A - Globo</option>
+                        <option value="B">Série B - RedeTV</option>
+                    </select>
+                </div>
+                <!-- Posição da Liga -->
+                <div>
+                    <label for="posicaoLiga" class="block text-sm font-medium text-gray-600 mb-1">Posição Final da Série</label>
+                    <input type="number" id="posicaoLiga" placeholder="1 a 22" min="1" max="22"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                <!-- Gols Feitos -->
+                <div>
+                    <label for="golsFeitos" class="block text-sm font-medium text-gray-600 mb-1">Gols Feitos</label>
+                    <input type="number" id="golsFeitos" placeholder="Ex: 150"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                </div>
+                <!-- Gols Sofridos -->
+                <div>
+                    <label for="golsSofridos" class="block text-sm font-medium text-gray-600 mb-1">Gols Sofridos</label>
+                    <input type="number" id="golsSofridos" placeholder="Ex: 120"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                </div>
+                <!-- Supercopa -->
+                <div>
+                    <label for="supercopa" class="block text-sm font-medium text-gray-600 mb-1">Supercopa</label>
+                    <select id="supercopa" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                        <option value="0">Nenhuma</option>
+                        <option value="oitavas">Oitavas</option>
+                        <option value="quartas">Quartas</option>
+                        <option value="semi">Semi</option>
+                        <option value="final">Final</option>
+                        <option value="campeao">Campeão</option>
+                    </select>
+                </div>
+                <!-- Champions -->
+                <div>
+                    <label for="champions" class="block text-sm font-medium text-gray-600 mb-1">Champions</label>
+                    <select id="champions" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                        <option value="0">Nenhuma</option>
+                        <option value="quartas">Quartas</option>
+                        <option value="semi">Semi</option>
+                        <option value="final">Final</option>
+                        <option value="campeao">Campeão</option>
+                    </select>
+                </div>
+                <!-- EA -->
+                <div>
+                    <label for="ea" class="block text-sm font-medium text-gray-600 mb-1">EA</label>
+                    <select id="ea" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                        <option value="0">Nenhuma</option>
+                        <option value="oitavas">Oitavas</option>
+                        <option value="quartas">Quartas</option>
+                        <option value="semi">Semi</option>
+                        <option value="final">Final</option>
+                        <option value="campeao">Campeão</option>
+                    </select>
+                </div>
+                <!-- Conference -->
+                <div>
+                    <label for="conference" class="block text-sm font-medium text-gray-600 mb-1">Conference</label>
+                    <select id="conference" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                        <option value="0">Nenhuma</option>
+                        <option value="oitavas">Oitavas</option>
+                        <option value="quartas">Quartas</option>
+                        <option value="semi">Semi</option>
+                        <option value="final">Final</option>
+                        <option value="campeao">Campeão</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="mt-6">
+                <label for="posicaoArena" class="block text-sm font-medium text-gray-600 mb-1">Posição na Arena (1-10)</label>
+                <input type="number" id="posicaoArena" placeholder="1 a 10" min="1" max="10"
+                       class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                <label for="arena" class="block text-sm font-medium text-gray-600 mt-4 mb-1">Arena</label>
+                <select id="arena" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                    <option value="A">Arena A</option>
+                    <option value="B">Arena B</option>
+                    <option value="C">Arena C</option>
+                    <option value="D">Arena D</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Botão Calcular -->
+        <div class="text-center mt-6">
+            <button onclick="calcularTudo()"
+                    class="px-8 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                Calcular
+            </button>
+        </div>
+
+        <!-- Seção de Resultados -->
+        <div class="mt-8 p-6 bg-red-50 rounded-lg">
+            <h2 class="text-xl font-semibold mb-4 section-title text-gray-700">Resultados</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
+                <div class="p-4 bg-gray-100 rounded-lg">
+                    <p class="text-gray-600 font-medium">Premiação Total:</p>
+                    <p id="premioTotal" class="text-2xl font-bold text-green-600 mt-1">R$ 0,00</p>
+                </div>
+                <div class="p-4 bg-gray-100 rounded-lg">
+                    <p class="text-gray-600 font-medium">Caixa + Premiação:</p>
+                    <p id="caixaMaisPremio" class="text-2xl font-bold text-green-600 mt-1">R$ 0,00</p>
+                </div>
+            </div>
+            <div class="mt-4 text-center">
+                <button onclick="pagarSalario()"
+                        class="px-6 py-2 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                    Pagar Salário
+                </button>
+            </div>
+            <div id="saldoFinalSection" class="mt-4 text-center hidden">
+                <p class="text-gray-600 font-medium">Saldo Final:</p>
+                <p id="saldoFinal" class="text-2xl font-bold mt-1"></p>
+                <p id="mensagemFinal" class="font-medium mt-2"></p>
+                <button id="analiseBtn" onclick="analisarSaldo()"
+                        class="mt-4 px-6 py-2 bg-purple-600 text-white font-bold rounded-lg shadow-md hover:bg-purple-700 transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
+                    ✨ Analisar Saldo
+                </button>
+                <p id="analiseTexto" class="mt-4 text-gray-800"></p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Mapeamento dos prêmios
+        const premios = {
+            golsFeitos: {
+                A: { 165: 2000, 155: 1800, 135: 1500, 125: 1000, 115: 500, 0: 0 },
+                B: { 165: 1800, 155: 1500, 135: 1000, 125: 600, 115: 300, 0: 0 }
+            },
+            golsSofridos: {
+                A: { 105: 2000, 130: 1800, 150: 1500, 0: 0 },
+                B: { 105: 1800, 130: 1500, 150: 1000, 0: 0 }
+            },
+            supercopa: {
+                A: { oitavas: 500, quartas: 1000, semi: 1500, final: 2000, campeao: 3000, 0: 0 },
+                B: { oitavas: 700, quartas: 1200, semi: 1700, final: 2200, campeao: 3000, 0: 0 }
+            },
+            champions: {
+                A: { quartas: 1200, semi: 1700, final: 2500, campeao: 3300, 0: 0 },
+                B: { quartas: 1500, semi: 2000, final: 2800, campeao: 3500, 0: 0 }
+            },
+            ea: {
+                A: { oitavas: 300, quartas: 500, semi: 800, final: 1000, campeao: 2500, 0: 0 },
+                B: { oitavas: 500, quartas: 800, semi: 1500, final: 1500, campeao: 2500, 0: 0 }
+            },
+            conference: {
+                A: { oitavas: 200, quartas: 300, semi: 500, final: 800, campeao: 1800, 0: 0 },
+                B: { oitavas: 300, quartas: 500, semi: 600, final: 1000, campeao: 2000, 0: 0 }
+            },
+            arenas: {
+                A: { 1: 12500, 2: 9500, 3: 8500, 4: 8500, 5: 7500, 6: 7000, 7: 6500, 8: 6500, 9: 5500, 10: 5500 },
+                B: { 1: 8500, 2: 7500, 3: 6500, 4: 6500, 5: 5500, 6: 5000, 7: 5000, 8: 5000, 9: 4500, 10: 4500 },
+                C: { 1: 7500, 2: 6500, 3: 5500, 4: 5500, 5: 4500, 6: 4000, 7: 4000, 8: 4000, 9: 3500, 10: 3500 },
+                D: { 1: 6500, 2: 5500, 3: 4500, 4: 4500, 5: 3500, 6: 3500, 7: 2500, 8: 2500, 9: 2500, 10: 2500 }
+            },
+            posicaoLiga: {
+                A: { 1: 20000, 2: 17000, 3: 16000, 4: 15000, 5: 14000, 6: 13000, 7: 12000, 8: 11000, 9: 10000, 10: 9000, 11: 8000, 12: 7000, 13: 6000, 14: 5000, 15: 4500, 16: 4500, 17: 4000, 18: 3500, 19: 3000, 20: 2500, 21: 2000, 22: 2000 },
+                B: { 1: 15000, 2: 14000, 3: 13000, 4: 12000, 5: 11000, 6: 10000, 7: 10000, 8: 9000, 9: 8000, 10: 7500, 11: 7000, 12: 6000, 13: 5000, 14: 4500, 15: 4000, 16: 3500, 17: 3500, 18: 3000, 19: 2500, 20: 2000, 21: 1500, 22: 1500 }
+            }
+        };
+
+        let totalPremiacaoGlobal = 0;
+        let saldoComPremioGlobal = 0;
+        let caixaFinalGlobal = 0;
+
+        // Função para formatar o valor de entrada
+        function formatInput(value) {
+            if (typeof value !== 'string') {
+                value = String(value);
+            }
+            return parseFloat(value.replace(/\./g, '').replace(',', '.')) || 0;
+        }
+
+        // Função para calcular o prêmio com base no tipo e na fase/liga
+        function getPremio(tipo, fase, liga) {
+            if (!premios[tipo] || !premios[tipo][liga] || !premios[tipo][liga][fase]) {
+                return 0;
+            }
+            return premios[tipo][liga][fase];
+        }
+
+        // Função principal de cálculo
+        function calcularTudo() {
+            let totalPremiacao = 0;
+            const liga = document.getElementById('liga').value;
+            const caixaInicial = formatInput(document.getElementById('caixa').value);
+            
+            // Oculta a seção de saldo final
+            document.getElementById('saldoFinalSection').classList.add('hidden');
+            document.getElementById('analiseTexto').textContent = '';
+
+            // Cálculo da posição da liga
+            const posicaoLiga = parseInt(document.getElementById('posicaoLiga').value) || 0;
+            if (posicaoLiga > 0 && posicaoLiga <= 22) {
+                totalPremiacao += premios.posicaoLiga[liga][posicaoLiga] || 0;
+            }
+
+            // Cálculo dos gols
+            const golsFeitos = parseInt(document.getElementById('golsFeitos').value) || 0;
+            const golsSofridos = parseInt(document.getElementById('golsSofridos').value) || 0;
+
+            const chavesGolsFeitos = Object.keys(premios.golsFeitos[liga]).sort((a, b) => b - a);
+            for (const chave of chavesGolsFeitos) {
+                if (golsFeitos >= parseInt(chave)) {
+                    totalPremiacao += premios.golsFeitos[liga][chave];
+                    break;
+                }
+            }
+
+            const chavesGolsSofridos = Object.keys(premios.golsSofridos[liga]).sort((a, b) => a - b);
+            for (const chave of chavesGolsSofridos) {
+                if (golsSofridos <= parseInt(chave)) {
+                    totalPremiacao += premios.golsSofridos[liga][chave];
+                    break;
+                }
+            }
+
+            // Cálculo das competições
+            totalPremiacao += getPremio('supercopa', document.getElementById('supercopa').value, liga);
+            totalPremiacao += getPremio('champions', document.getElementById('champions').value, liga);
+            totalPremiacao += getPremio('ea', document.getElementById('ea').value, liga);
+            totalPremiacao += getPremio('conference', document.getElementById('conference').value, liga);
+            
+            // Cálculo da arena
+            const posicaoArena = parseInt(document.getElementById('posicaoArena').value) || 0;
+            const arena = document.getElementById('arena').value;
+            if (posicaoArena > 0 && posicaoArena <= 10) {
+                 totalPremiacao += premios.arenas[arena][posicaoArena] || 0;
+            }
+
+            totalPremiacaoGlobal = totalPremiacao;
+            saldoComPremioGlobal = caixaInicial + totalPremiacao;
+
+            // Exibir a premiação total
+            document.getElementById('premioTotal').textContent = `R$ ${totalPremiacao.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            document.getElementById('caixaMaisPremio').textContent = `R$ ${saldoComPremioGlobal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        }
+
+        // Função para pagar o salário e exibir o saldo final
+        function pagarSalario() {
+            const salarioTotal = formatInput(document.getElementById('salarioTotal').value);
+            caixaFinalGlobal = saldoComPremioGlobal - salarioTotal;
+
+            document.getElementById('saldoFinalSection').classList.remove('hidden');
+            
+            const saldoFinalElement = document.getElementById('saldoFinal');
+            saldoFinalElement.textContent = `R$ ${caixaFinalGlobal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+            // Lógica de mensagem final
+            const mensagemFinal = document.getElementById('mensagemFinal');
+            if (caixaFinalGlobal >= 0) {
+                mensagemFinal.textContent = "Parabéns! Sua equipe está com o caixa positivo.";
+                saldoFinalElement.classList.remove('text-red-600');
+                saldoFinalElement.classList.add('text-green-600');
+                mensagemFinal.classList.remove('text-red-600');
+                mensagemFinal.classList.add('text-green-600');
+            } else {
+                const valorFaltante = Math.abs(caixaFinalGlobal).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                mensagemFinal.textContent = `Atenção: Faltam R$ ${valorFaltante} para pagar o salário.`;
+                saldoFinalElement.classList.remove('text-green-600');
+                saldoFinalElement.classList.add('text-red-600');
+                mensagemFinal.classList.remove('text-green-600');
+                mensagemFinal.classList.add('text-red-600');
+            }
+        }
+
+        async function analisarSaldo() {
+            const mensagemFinal = document.getElementById('mensagemFinal').textContent;
+            const analiseTextoElement = document.getElementById('analiseTexto');
+            analiseTextoElement.textContent = 'Aguardando a análise...';
+
+            const userQuery = `Minha equipe tem o seguinte resultado financeiro: "${mensagemFinal}". Por favor, forneça uma análise de gestão de caixa concisa para a equipe. Dê dicas de como manter ou melhorar o saldo e destaque os pontos fortes ou fracos. O texto deve ter no máximo 3 parágrafos.`;
+            
+            // Constantes do Gemini API
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            // Configuração do payload para a chamada do API
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                tools: [{ "google_search": {} }],
+                systemInstruction: {
+                    parts: [{ text: "Atue como um analista de gestão financeira para equipes de ligas virtuais." }]
+                },
+            };
+            
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const result = await response.json();
+                const candidate = result.candidates?.[0];
+                
+                if (candidate && candidate.content?.parts?.[0]?.text) {
+                    const text = candidate.content.parts[0].text;
+                    analiseTextoElement.textContent = text;
+                } else {
+                    analiseTextoElement.textContent = "Não foi possível gerar a análise. Tente novamente mais tarde.";
+                }
+
+            } catch (error) {
+                analiseTextoElement.textContent = "Ocorreu um erro ao conectar com o serviço de análise. Tente novamente.";
+                console.error("Erro na chamada da API:", error);
+            }
+        }
+
+        // Função para gerar um número aleatório dentro de uma faixa e formatá-lo com 2 casas decimais
+        function getRandomNumber(min, max) {
+            return (Math.random() * (max - min) + min).toFixed(2);
+        }
+
+        // Adiciona um evento para gerar valores aleatórios ao carregar a página
+        window.onload = function() {
+            const caixaInput = document.getElementById('caixa');
+            const salarioInput = document.getElementById('salarioTotal');
+
+            // Gerar valores aleatórios para os placeholders e os valores iniciais
+            const randomCaixaValue = getRandomNumber(50000, 100000).replace('.', ',');
+            const randomSalarioValue = getRandomNumber(30000, 70000).replace('.', ',');
+
+            caixaInput.value = randomCaixaValue;
+            caixaInput.setAttribute('placeholder', 'Ex: ' + randomCaixaValue);
+            salarioInput.value = randomSalarioValue;
+            salarioInput.setAttribute('placeholder', 'Ex: ' + randomSalarioValue);
+        };
+    </script>
+</body>
+</html>
