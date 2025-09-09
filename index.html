@@ -41,11 +41,6 @@
             Calcule sua premiação total na Liga Virtual com base nos seus resultados.
         </p>
 
-        <!-- Seção de Pessoas Online -->
-        <div class="mt-4 text-center">
-            <p class="text-gray-400 font-medium">Pessoas Online: <span id="onlineCount" class="font-bold text-orange-400">0</span></p>
-        </div>
-
         <!-- Seção de Entrada de Dados -->
         <div class="mb-8 p-6 bg-gray-700 rounded-lg">
             <h2 class="text-xl font-semibold mb-4 section-title text-gray-200">Dados da Equipe</h2>
@@ -142,6 +137,7 @@
                         <option value="final">Final</option>
                         <option value="campeao">Campeão</option>
                     </select>
+                </select>
                 </div>
             </div>
             
@@ -190,22 +186,12 @@
                 <p class="text-gray-400 font-medium">Saldo Final:</p>
                 <p id="saldoFinal" class="text-2xl font-bold mt-1"></p>
                 <p id="mensagemFinal" class="font-medium mt-2"></p>
-                <button id="analiseBtn" onclick="analisarSaldo()"
-                        class="mt-4 px-6 py-2 bg-yellow-600 text-white font-bold rounded-lg shadow-md hover:bg-yellow-700 transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2">
-                    ✨ Analisar Saldo
-                </button>
-                <p id="analiseTexto" class="mt-4 text-gray-300"></p>
             </div>
         </div>
 
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getFirestore, doc, setDoc, onSnapshot, deleteDoc, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        
+    <script type="text/javascript">
         // Mapeamento dos prêmios
         const premios = {
             golsFeitos: {
@@ -246,49 +232,26 @@
 
         let totalPremiacaoGlobal = 0;
         let saldoComPremioGlobal = 0;
-        let caixaFinalGlobal = 0;
 
-        // Firebase Setup
-        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth(app);
-        setLogLevel('debug');
-        
-        let userId = '';
-        let onlineRef = null;
-        
-        // Function to format the input value
         function formatInput(value) {
             if (typeof value !== 'string') {
                 value = String(value);
             }
-            // Replace dots with nothing and commas with dots for proper float parsing
             return parseFloat(value.replace(/\./g, '').replace(',', '.')) || 0;
         }
         
-        // Function to generate a random number within a range and format it with 2 decimal places
-        function getRandomNumber(min, max) {
-            return (Math.random() * (max - min) + min).toFixed(2);
-        }
-
-        // Main calculation function
-        window.calcularTudo = function() {
+        function calcularTudo() {
             let totalPremiacao = 0;
             const liga = document.getElementById('liga').value;
             const caixaInicial = formatInput(document.getElementById('caixa').value);
             
-            // Hide final balance section
             document.getElementById('saldoFinalSection').classList.add('hidden');
-            document.getElementById('analiseTexto').textContent = '';
 
-            // Calculate league position
             const posicaoLiga = parseInt(document.getElementById('posicaoLiga').value) || 0;
             if (posicaoLiga > 0 && posicaoLiga <= 22) {
                 totalPremiacao += premios.posicaoLiga[liga][posicaoLiga] || 0;
             }
 
-            // Calculate goals
             const golsFeitos = parseInt(document.getElementById('golsFeitos').value) || 0;
             const golsSofridos = parseInt(document.getElementById('golsSofridos').value) || 0;
 
@@ -308,13 +271,11 @@
                 }
             }
 
-            // Calculate competitions
             totalPremiacao += premios.supercopa[liga][document.getElementById('supercopa').value] || 0;
             totalPremiacao += premios.champions[liga][document.getElementById('champions').value] || 0;
             totalPremiacao += premios.ea[liga][document.getElementById('ea').value] || 0;
             totalPremiacao += premios.conference[liga][document.getElementById('conference').value] || 0;
             
-            // Calculate arena
             const posicaoArena = parseInt(document.getElementById('posicaoArena').value) || 0;
             const arena = document.getElementById('arena').value;
             if (posicaoArena > 0 && posicaoArena <= 10) {
@@ -324,31 +285,28 @@
             totalPremiacaoGlobal = totalPremiacao;
             saldoComPremioGlobal = caixaInicial + totalPremiacao;
 
-            // Display total prize money
             document.getElementById('premioTotal').textContent = `R$ ${totalPremiacao.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
             document.getElementById('caixaMaisPremio').textContent = `R$ ${saldoComPremioGlobal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
         }
 
-        // Function to pay the salary and display the final balance
-        window.pagarSalario = function() {
+        function pagarSalario() {
             const salarioTotal = formatInput(document.getElementById('salarioTotal').value);
-            caixaFinalGlobal = saldoComPremioGlobal - salarioTotal;
+            const caixaFinal = saldoComPremioGlobal - salarioTotal;
 
             document.getElementById('saldoFinalSection').classList.remove('hidden');
             
             const saldoFinalElement = document.getElementById('saldoFinal');
-            saldoFinalElement.textContent = `R$ ${caixaFinalGlobal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            saldoFinalElement.textContent = `R$ ${caixaFinal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
-            // Final message logic
             const mensagemFinal = document.getElementById('mensagemFinal');
-            if (caixaFinalGlobal >= 0) {
+            if (caixaFinal >= 0) {
                 mensagemFinal.textContent = "Parabéns! Sua equipe está com o caixa positivo.";
                 saldoFinalElement.classList.remove('text-red-600');
                 saldoFinalElement.classList.add('text-orange-400');
                 mensagemFinal.classList.remove('text-red-600');
                 mensagemFinal.classList.add('text-orange-400');
             } else {
-                const valorFaltante = Math.abs(caixaFinalGlobal).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                const valorFaltante = Math.abs(caixaFinal).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                 mensagemFinal.textContent = `Atenção: Faltam R$ ${valorFaltante} para pagar o salário.`;
                 saldoFinalElement.classList.remove('text-orange-400');
                 saldoFinalElement.classList.add('text-red-600');
@@ -357,114 +315,16 @@
             }
         }
 
-        // Function to call the LLM for financial analysis
-        window.analisarSaldo = async function() {
-            const mensagemFinal = document.getElementById('mensagemFinal').textContent;
-            const analiseTextoElement = document.getElementById('analiseTexto');
-            analiseTextoElement.textContent = 'Aguardando a análise...';
-
-            const userQuery = `Minha equipe tem o seguinte resultado financeiro: "${mensagemFinal}". Por favor, forneça uma análise de gestão de caixa concisa para a equipe. Dê dicas de como manter ou melhorar o saldo e destaque os pontos fortes ou fracos. O texto deve ter no máximo 3 parágrafos.`;
-            
-            // Gemini API constants
-            const apiKey = "";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-            // Payload configuration for the API call
-            const payload = {
-                contents: [{ parts: [{ text: userQuery }] }],
-                tools: [{ "google_search": {} }],
-                systemInstruction: {
-                    parts: [{ text: "Atue como um analista de gestão financeira para equipes de ligas virtuais." }]
-                },
-            };
-            
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                
-                if (!response.ok) {
-                    console.error(`API call failed with status: ${response.status} ${response.statusText}`);
-                    analiseTextoElement.textContent = `Ocorreu um erro na chamada da API. Status: ${response.status}`;
-                    return;
-                }
-
-                const result = await response.json();
-                const candidate = result.candidates?.[0];
-                
-                if (candidate && candidate.content?.parts?.[0]?.text) {
-                    const text = candidate.content.parts[0].text;
-                    analiseTextoElement.textContent = text;
-                } else {
-                    analiseTextoElement.textContent = "Não foi possível gerar a análise. Tente novamente mais tarde.";
-                }
-
-            } catch (error) {
-                analiseTextoElement.textContent = "Ocorreu um erro ao conectar com o serviço de análise. Tente novamente.";
-                console.error("Erro na chamada da API:", error);
-            }
-        }
-
-        // Function to set up the online user counter
-        async function setupOnlineCounter() {
-            try {
-                const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-                const usersCollectionRef = collection(db, `artifacts/${appId}/public/data/online_users`);
-
-                // Authenticate with a custom token or anonymously if the token is not available
-                if (typeof __initial_auth_token !== 'undefined') {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-                
-                const currentUser = auth.currentUser;
-                if (!currentUser) {
-                    console.error("Authentication failed.");
-                    return;
-                }
-                
-                userId = currentUser.uid;
-
-                // Create a document for the current user
-                const onlineRef = doc(usersCollectionRef, userId);
-                await setDoc(onlineRef, { lastSeen: Date.now() });
-
-                // Set up a listener to delete the user document when they leave the page
-                window.addEventListener('beforeunload', () => {
-                    if (onlineRef) {
-                        deleteDoc(onlineRef);
-                    }
-                });
-
-                // Set up a real-time listener to count online users
-                onSnapshot(usersCollectionRef, (snapshot) => {
-                    const onlineCount = snapshot.size;
-                    document.getElementById('onlineCount').textContent = onlineCount;
-                });
-
-            } catch (e) {
-                console.error("Error setting up online counter:", e);
-            }
-        }
-
-        // Add an event to generate random values and set up the counter when the page loads
-        window.onload = function() {
+        document.addEventListener('DOMContentLoaded', () => {
             const caixaInput = document.getElementById('caixa');
             const salarioInput = document.getElementById('salarioTotal');
             
-            // Gerar valores aleatórios para os placeholders
             const randomCaixaValue = (Math.random() * (100000 - 50000) + 50000).toFixed(2).replace('.', ',');
             const randomSalarioValue = (Math.random() * (70000 - 30000) + 30000).toFixed(2).replace('.', ',');
 
             caixaInput.setAttribute('placeholder', `Ex: ${randomCaixaValue}`);
             salarioInput.setAttribute('placeholder', `Ex: ${randomSalarioValue}`);
-
-            // Set up the online counter
-            setupOnlineCounter();
-        };
+        });
     </script>
 </body>
 </html>
