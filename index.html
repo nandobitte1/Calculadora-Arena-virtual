@@ -9,7 +9,8 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
+            background-color: #1a1a1a;
+            color: #f5f5f5;
         }
         .container {
             max-width: 900px;
@@ -26,72 +27,79 @@
             left: 0;
             width: 100%;
             height: 2px;
-            background-color: #3b82f6;
+            background-color: #ff8c00;
         }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
 
-    <div class="container bg-white shadow-xl rounded-2xl p-6 md:p-10 w-full">
-        <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">Calculadora de Premiação</h1>
-        <p class="text-center text-gray-500 mb-8">
+    <div class="container bg-gray-800 shadow-xl rounded-2xl p-6 md:p-10 w-full">
+        <div class="flex flex-col items-center justify-center mb-6">
+            <h1 class="text-3xl font-bold text-center text-gray-100">Calculadora de Premiação</h1>
+        </div>
+        <p class="text-center text-gray-400 mb-8">
             Calcule sua premiação total na Liga Virtual com base nos seus resultados.
         </p>
 
+        <!-- Seção de Pessoas Online -->
+        <div class="mt-4 text-center">
+            <p class="text-gray-400 font-medium">Pessoas Online: <span id="onlineCount" class="font-bold text-orange-400">0</span></p>
+        </div>
+
         <!-- Seção de Entrada de Dados -->
-        <div class="mb-8 p-6 bg-blue-50 rounded-lg">
-            <h2 class="text-xl font-semibold mb-4 section-title text-gray-700">Dados da Equipe</h2>
+        <div class="mb-8 p-6 bg-gray-700 rounded-lg">
+            <h2 class="text-xl font-semibold mb-4 section-title text-gray-200">Dados da Equipe</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label for="caixa" class="block text-sm font-medium text-gray-600 mb-1">Valor em Caixa (R$)</label>
-                    <input type="text" id="caixa" placeholder="Ex: 57.893,57"
-                           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                    <label for="caixa" class="block text-sm font-medium text-gray-300 mb-1">Valor em Caixa (R$)</label>
+                    <input type="text" id="caixa"
+                           class="w-full px-4 py-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-200 bg-gray-900 text-gray-200">
                 </div>
                 <div>
-                    <label for="salarioTotal" class="block text-sm font-medium text-gray-600 mb-1">Salário a Pagar (R$)</label>
-                    <input type="text" id="salarioTotal" placeholder="Ex: 88.860,00"
-                           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                    <label for="salarioTotal" class="block text-sm font-medium text-gray-300 mb-1">Salário a Pagar (R$)</label>
+                    <input type="text" id="salarioTotal"
+                           class="w-full px-4 py-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-200 bg-gray-900 text-gray-200">
                 </div>
             </div>
         </div>
 
         <!-- Seleção de Competições -->
-        <div class="mb-8 p-6 bg-green-50 rounded-lg">
-            <h2 class="text-xl font-semibold mb-4 section-title text-gray-700">Premiações de Competições</h2>
+        <div class="mb-8 p-6 bg-gray-700 rounded-lg">
+            <h2 class="text-xl font-semibold mb-4 section-title text-gray-200">Premiações de Competições</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Série -->
                 <div>
-                    <label for="liga" class="block text-sm font-medium text-gray-600 mb-1">Série</label>
-                    <select id="liga" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                    <label for="liga" class="block text-sm font-medium text-gray-300 mb-1">Série</label>
+                    <select id="liga" class="w-full px-4 py-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-200 bg-gray-900 text-gray-200">
                         <option value="A">Série A - Globo</option>
                         <option value="B">Série B - RedeTV</option>
                     </select>
                 </div>
                 <!-- Posição da Liga -->
                 <div>
-                    <label for="posicaoLiga" class="block text-sm font-medium text-gray-600 mb-1">Posição Final da Série</label>
+                    <label for="posicaoLiga" class="block text-sm font-medium text-gray-300 mb-1">Posição Final da Série</label>
                     <input type="number" id="posicaoLiga" placeholder="1 a 22" min="1" max="22"
-                           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                           class="w-full px-4 py-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-200 bg-gray-900 text-gray-200">
                 </div>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                 <!-- Gols Feitos -->
                 <div>
-                    <label for="golsFeitos" class="block text-sm font-medium text-gray-600 mb-1">Gols Feitos</label>
+                    <label for="golsFeitos" class="block text-sm font-medium text-gray-300 mb-1">Gols Feitos</label>
                     <input type="number" id="golsFeitos" placeholder="Ex: 150"
-                           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                           class="w-full px-4 py-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-200 bg-gray-900 text-gray-200">
                 </div>
                 <!-- Gols Sofridos -->
                 <div>
-                    <label for="golsSofridos" class="block text-sm font-medium text-gray-600 mb-1">Gols Sofridos</label>
+                    <label for="golsSofridos" class="block text-sm font-medium text-gray-300 mb-1">Gols Sofridos</label>
                     <input type="number" id="golsSofridos" placeholder="Ex: 120"
-                           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                           class="w-full px-4 py-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-200 bg-gray-900 text-gray-200">
                 </div>
                 <!-- Supercopa -->
                 <div>
-                    <label for="supercopa" class="block text-sm font-medium text-gray-600 mb-1">Supercopa</label>
-                    <select id="supercopa" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                    <label for="supercopa" class="block text-sm font-medium text-gray-300 mb-1">Supercopa</label>
+                    <select id="supercopa" class="w-full px-4 py-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-200 bg-gray-900 text-gray-200">
                         <option value="0">Nenhuma</option>
                         <option value="oitavas">Oitavas</option>
                         <option value="quartas">Quartas</option>
@@ -102,8 +110,8 @@
                 </div>
                 <!-- Champions -->
                 <div>
-                    <label for="champions" class="block text-sm font-medium text-gray-600 mb-1">Champions</label>
-                    <select id="champions" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                    <label for="champions" class="block text-sm font-medium text-gray-300 mb-1">Champions</label>
+                    <select id="champions" class="w-full px-4 py-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-200 bg-gray-900 text-gray-200">
                         <option value="0">Nenhuma</option>
                         <option value="quartas">Quartas</option>
                         <option value="semi">Semi</option>
@@ -113,8 +121,8 @@
                 </div>
                 <!-- EA -->
                 <div>
-                    <label for="ea" class="block text-sm font-medium text-gray-600 mb-1">EA</label>
-                    <select id="ea" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                    <label for="ea" class="block text-sm font-medium text-gray-300 mb-1">EA</label>
+                    <select id="ea" class="w-full px-4 py-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-200 bg-gray-900 text-gray-200">
                         <option value="0">Nenhuma</option>
                         <option value="oitavas">Oitavas</option>
                         <option value="quartas">Quartas</option>
@@ -125,8 +133,8 @@
                 </div>
                 <!-- Conference -->
                 <div>
-                    <label for="conference" class="block text-sm font-medium text-gray-600 mb-1">Conference</label>
-                    <select id="conference" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                    <label for="conference" class="block text-sm font-medium text-gray-300 mb-1">Conference</label>
+                    <select id="conference" class="w-full px-4 py-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-200 bg-gray-900 text-gray-200">
                         <option value="0">Nenhuma</option>
                         <option value="oitavas">Oitavas</option>
                         <option value="quartas">Quartas</option>
@@ -138,11 +146,11 @@
             </div>
             
             <div class="mt-6">
-                <label for="posicaoArena" class="block text-sm font-medium text-gray-600 mb-1">Posição na Arena (1-10)</label>
+                <label for="posicaoArena" class="block text-sm font-medium text-gray-300 mb-1">Posição na Arena (1-10)</label>
                 <input type="number" id="posicaoArena" placeholder="1 a 10" min="1" max="10"
-                       class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
-                <label for="arena" class="block text-sm font-medium text-gray-600 mt-4 mb-1">Arena</label>
-                <select id="arena" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                       class="w-full px-4 py-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-200 bg-gray-900 text-gray-200">
+                <label for="arena" class="block text-sm font-medium text-gray-300 mt-4 mb-1">Arena</label>
+                <select id="arena" class="w-full px-4 py-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-200 bg-gray-900 text-gray-200">
                     <option value="A">Arena A</option>
                     <option value="B">Arena B</option>
                     <option value="C">Arena C</option>
@@ -154,45 +162,50 @@
         <!-- Botão Calcular -->
         <div class="text-center mt-6">
             <button onclick="calcularTudo()"
-                    class="px-8 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                    class="px-8 py-3 bg-orange-600 text-white font-bold rounded-lg shadow-md hover:bg-orange-700 transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
                 Calcular
             </button>
         </div>
 
         <!-- Seção de Resultados -->
-        <div class="mt-8 p-6 bg-red-50 rounded-lg">
-            <h2 class="text-xl font-semibold mb-4 section-title text-gray-700">Resultados</h2>
+        <div class="mt-8 p-6 bg-gray-700 rounded-lg">
+            <h2 class="text-xl font-semibold mb-4 section-title text-gray-200">Resultados</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
-                <div class="p-4 bg-gray-100 rounded-lg">
-                    <p class="text-gray-600 font-medium">Premiação Total:</p>
-                    <p id="premioTotal" class="text-2xl font-bold text-green-600 mt-1">R$ 0,00</p>
+                <div class="p-4 bg-gray-900 rounded-lg">
+                    <p class="text-gray-400 font-medium">Premiação Total:</p>
+                    <p id="premioTotal" class="text-2xl font-bold text-orange-400 mt-1">R$ 0,00</p>
                 </div>
-                <div class="p-4 bg-gray-100 rounded-lg">
-                    <p class="text-gray-600 font-medium">Caixa + Premiação:</p>
-                    <p id="caixaMaisPremio" class="text-2xl font-bold text-green-600 mt-1">R$ 0,00</p>
+                <div class="p-4 bg-gray-900 rounded-lg">
+                    <p class="text-gray-400 font-medium">Caixa + Premiação:</p>
+                    <p id="caixaMaisPremio" class="text-2xl font-bold text-orange-400 mt-1">R$ 0,00</p>
                 </div>
             </div>
             <div class="mt-4 text-center">
                 <button onclick="pagarSalario()"
-                        class="px-6 py-2 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        class="px-6 py-2 bg-orange-600 text-white font-bold rounded-lg shadow-md hover:bg-orange-700 transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
                     Pagar Salário
                 </button>
             </div>
             <div id="saldoFinalSection" class="mt-4 text-center hidden">
-                <p class="text-gray-600 font-medium">Saldo Final:</p>
+                <p class="text-gray-400 font-medium">Saldo Final:</p>
                 <p id="saldoFinal" class="text-2xl font-bold mt-1"></p>
                 <p id="mensagemFinal" class="font-medium mt-2"></p>
                 <button id="analiseBtn" onclick="analisarSaldo()"
-                        class="mt-4 px-6 py-2 bg-purple-600 text-white font-bold rounded-lg shadow-md hover:bg-purple-700 transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
+                        class="mt-4 px-6 py-2 bg-yellow-600 text-white font-bold rounded-lg shadow-md hover:bg-yellow-700 transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2">
                     ✨ Analisar Saldo
                 </button>
-                <p id="analiseTexto" class="mt-4 text-gray-800"></p>
+                <p id="analiseTexto" class="mt-4 text-gray-300"></p>
             </div>
         </div>
 
     </div>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, doc, setDoc, onSnapshot, deleteDoc, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
         // Mapeamento dos prêmios
         const premios = {
             golsFeitos: {
@@ -235,39 +248,47 @@
         let saldoComPremioGlobal = 0;
         let caixaFinalGlobal = 0;
 
-        // Função para formatar o valor de entrada
+        // Firebase Setup
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        setLogLevel('debug');
+        
+        let userId = '';
+        let onlineRef = null;
+        
+        // Function to format the input value
         function formatInput(value) {
             if (typeof value !== 'string') {
                 value = String(value);
             }
+            // Replace dots with nothing and commas with dots for proper float parsing
             return parseFloat(value.replace(/\./g, '').replace(',', '.')) || 0;
         }
-
-        // Função para calcular o prêmio com base no tipo e na fase/liga
-        function getPremio(tipo, fase, liga) {
-            if (!premios[tipo] || !premios[tipo][liga] || !premios[tipo][liga][fase]) {
-                return 0;
-            }
-            return premios[tipo][liga][fase];
+        
+        // Function to generate a random number within a range and format it with 2 decimal places
+        function getRandomNumber(min, max) {
+            return (Math.random() * (max - min) + min).toFixed(2);
         }
 
-        // Função principal de cálculo
-        function calcularTudo() {
+        // Main calculation function
+        window.calcularTudo = function() {
             let totalPremiacao = 0;
             const liga = document.getElementById('liga').value;
             const caixaInicial = formatInput(document.getElementById('caixa').value);
             
-            // Oculta a seção de saldo final
+            // Hide final balance section
             document.getElementById('saldoFinalSection').classList.add('hidden');
             document.getElementById('analiseTexto').textContent = '';
 
-            // Cálculo da posição da liga
+            // Calculate league position
             const posicaoLiga = parseInt(document.getElementById('posicaoLiga').value) || 0;
             if (posicaoLiga > 0 && posicaoLiga <= 22) {
                 totalPremiacao += premios.posicaoLiga[liga][posicaoLiga] || 0;
             }
 
-            // Cálculo dos gols
+            // Calculate goals
             const golsFeitos = parseInt(document.getElementById('golsFeitos').value) || 0;
             const golsSofridos = parseInt(document.getElementById('golsSofridos').value) || 0;
 
@@ -287,13 +308,13 @@
                 }
             }
 
-            // Cálculo das competições
-            totalPremiacao += getPremio('supercopa', document.getElementById('supercopa').value, liga);
-            totalPremiacao += getPremio('champions', document.getElementById('champions').value, liga);
-            totalPremiacao += getPremio('ea', document.getElementById('ea').value, liga);
-            totalPremiacao += getPremio('conference', document.getElementById('conference').value, liga);
+            // Calculate competitions
+            totalPremiacao += premios.supercopa[liga][document.getElementById('supercopa').value] || 0;
+            totalPremiacao += premios.champions[liga][document.getElementById('champions').value] || 0;
+            totalPremiacao += premios.ea[liga][document.getElementById('ea').value] || 0;
+            totalPremiacao += premios.conference[liga][document.getElementById('conference').value] || 0;
             
-            // Cálculo da arena
+            // Calculate arena
             const posicaoArena = parseInt(document.getElementById('posicaoArena').value) || 0;
             const arena = document.getElementById('arena').value;
             if (posicaoArena > 0 && posicaoArena <= 10) {
@@ -303,13 +324,13 @@
             totalPremiacaoGlobal = totalPremiacao;
             saldoComPremioGlobal = caixaInicial + totalPremiacao;
 
-            // Exibir a premiação total
+            // Display total prize money
             document.getElementById('premioTotal').textContent = `R$ ${totalPremiacao.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
             document.getElementById('caixaMaisPremio').textContent = `R$ ${saldoComPremioGlobal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
         }
 
-        // Função para pagar o salário e exibir o saldo final
-        function pagarSalario() {
+        // Function to pay the salary and display the final balance
+        window.pagarSalario = function() {
             const salarioTotal = formatInput(document.getElementById('salarioTotal').value);
             caixaFinalGlobal = saldoComPremioGlobal - salarioTotal;
 
@@ -318,36 +339,37 @@
             const saldoFinalElement = document.getElementById('saldoFinal');
             saldoFinalElement.textContent = `R$ ${caixaFinalGlobal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
-            // Lógica de mensagem final
+            // Final message logic
             const mensagemFinal = document.getElementById('mensagemFinal');
             if (caixaFinalGlobal >= 0) {
                 mensagemFinal.textContent = "Parabéns! Sua equipe está com o caixa positivo.";
                 saldoFinalElement.classList.remove('text-red-600');
-                saldoFinalElement.classList.add('text-green-600');
+                saldoFinalElement.classList.add('text-orange-400');
                 mensagemFinal.classList.remove('text-red-600');
-                mensagemFinal.classList.add('text-green-600');
+                mensagemFinal.classList.add('text-orange-400');
             } else {
                 const valorFaltante = Math.abs(caixaFinalGlobal).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                 mensagemFinal.textContent = `Atenção: Faltam R$ ${valorFaltante} para pagar o salário.`;
-                saldoFinalElement.classList.remove('text-green-600');
+                saldoFinalElement.classList.remove('text-orange-400');
                 saldoFinalElement.classList.add('text-red-600');
-                mensagemFinal.classList.remove('text-green-600');
+                mensagemFinal.classList.remove('text-orange-400');
                 mensagemFinal.classList.add('text-red-600');
             }
         }
 
-        async function analisarSaldo() {
+        // Function to call the LLM for financial analysis
+        window.analisarSaldo = async function() {
             const mensagemFinal = document.getElementById('mensagemFinal').textContent;
             const analiseTextoElement = document.getElementById('analiseTexto');
             analiseTextoElement.textContent = 'Aguardando a análise...';
 
             const userQuery = `Minha equipe tem o seguinte resultado financeiro: "${mensagemFinal}". Por favor, forneça uma análise de gestão de caixa concisa para a equipe. Dê dicas de como manter ou melhorar o saldo e destaque os pontos fortes ou fracos. O texto deve ter no máximo 3 parágrafos.`;
             
-            // Constantes do Gemini API
+            // Gemini API constants
             const apiKey = "";
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
-            // Configuração do payload para a chamada do API
+            // Payload configuration for the API call
             const payload = {
                 contents: [{ parts: [{ text: userQuery }] }],
                 tools: [{ "google_search": {} }],
@@ -363,6 +385,12 @@
                     body: JSON.stringify(payload)
                 });
                 
+                if (!response.ok) {
+                    console.error(`API call failed with status: ${response.status} ${response.statusText}`);
+                    analiseTextoElement.textContent = `Ocorreu um erro na chamada da API. Status: ${response.status}`;
+                    return;
+                }
+
                 const result = await response.json();
                 const candidate = result.candidates?.[0];
                 
@@ -379,24 +407,63 @@
             }
         }
 
-        // Função para gerar um número aleatório dentro de uma faixa e formatá-lo com 2 casas decimais
-        function getRandomNumber(min, max) {
-            return (Math.random() * (max - min) + min).toFixed(2);
+        // Function to set up the online user counter
+        async function setupOnlineCounter() {
+            try {
+                const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+                const usersCollectionRef = collection(db, `artifacts/${appId}/public/data/online_users`);
+
+                // Authenticate with a custom token or anonymously if the token is not available
+                if (typeof __initial_auth_token !== 'undefined') {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                
+                const currentUser = auth.currentUser;
+                if (!currentUser) {
+                    console.error("Authentication failed.");
+                    return;
+                }
+                
+                userId = currentUser.uid;
+
+                // Create a document for the current user
+                const onlineRef = doc(usersCollectionRef, userId);
+                await setDoc(onlineRef, { lastSeen: Date.now() });
+
+                // Set up a listener to delete the user document when they leave the page
+                window.addEventListener('beforeunload', () => {
+                    if (onlineRef) {
+                        deleteDoc(onlineRef);
+                    }
+                });
+
+                // Set up a real-time listener to count online users
+                onSnapshot(usersCollectionRef, (snapshot) => {
+                    const onlineCount = snapshot.size;
+                    document.getElementById('onlineCount').textContent = onlineCount;
+                });
+
+            } catch (e) {
+                console.error("Error setting up online counter:", e);
+            }
         }
 
-        // Adiciona um evento para gerar valores aleatórios ao carregar a página
+        // Add an event to generate random values and set up the counter when the page loads
         window.onload = function() {
             const caixaInput = document.getElementById('caixa');
             const salarioInput = document.getElementById('salarioTotal');
+            
+            // Gerar valores aleatórios para os placeholders
+            const randomCaixaValue = (Math.random() * (100000 - 50000) + 50000).toFixed(2).replace('.', ',');
+            const randomSalarioValue = (Math.random() * (70000 - 30000) + 30000).toFixed(2).replace('.', ',');
 
-            // Gerar valores aleatórios para os placeholders e os valores iniciais
-            const randomCaixaValue = getRandomNumber(50000, 100000).replace('.', ',');
-            const randomSalarioValue = getRandomNumber(30000, 70000).replace('.', ',');
+            caixaInput.setAttribute('placeholder', `Ex: ${randomCaixaValue}`);
+            salarioInput.setAttribute('placeholder', `Ex: ${randomSalarioValue}`);
 
-            caixaInput.value = randomCaixaValue;
-            caixaInput.setAttribute('placeholder', 'Ex: ' + randomCaixaValue);
-            salarioInput.value = randomSalarioValue;
-            salarioInput.setAttribute('placeholder', 'Ex: ' + randomSalarioValue);
+            // Set up the online counter
+            setupOnlineCounter();
         };
     </script>
 </body>
